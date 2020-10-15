@@ -8,8 +8,9 @@
  $link[] = array(
     'label' => 'Greek Life GPA',
     'restricted' => TRUE,
-    'url' => '/gpa/admin',
+    'url' => '/gpa',
     'description' => 'Greek Life GPA check system for pledges.',
+    'image' => 'gpa.png',
     'tab' => 'content'
  );
 

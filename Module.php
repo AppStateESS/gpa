@@ -1,11 +1,15 @@
 <?php
 
-namespace gpa;
-
 /**
  * @license http://opensource.org/licenses/lgpl-3.0.html
  * @author Justyn Crook <hannajg at appstate dot edu>
  */
+
+namespace gpa;
+
+ use Canopy\Request;
+ use Canopy\Controller;
+
  class Module extends \Canopy\Module
  {
      public function __construct()
@@ -22,7 +26,7 @@ namespace gpa;
          spl_autoload_register('\gpa\Module::autoloader', true, true);
      }
 
-     public function beforeRun(\Request $request, \Controller $controller)
+     public function beforeRun(Request $request, Controller $controller)
      {
          $this->checkDefine();
      }
@@ -43,7 +47,7 @@ namespace gpa;
          require_once $define_file;
      }
 
-     public function getController(\Request $request)
+     public function getController(Request $request)
      {
          $cmd = $request->shiftCommand();
          if ($cmd == 'Admin')
@@ -58,7 +62,7 @@ namespace gpa;
          }
      }
 
-     public function runTime(\Request $request)
+     public function runTime(Request $request)
      {
          $this->checkDefine();
          if (\PHPWS_Core::atHome())
@@ -94,6 +98,16 @@ namespace gpa;
              $not_found[] = $class_name;
              return false;
          }
+     }
+
+     private function frontPage(Request $request)
+     {
+         if (!empty($request->getModule())) {
+             return;
+         }
+         $view = new \gpa\View\View;
+         $settings = new \phpws2\Settings;
+         \Layout::add($view->show($request), 'gpa', 'gpa', true);
      }
  }
 
