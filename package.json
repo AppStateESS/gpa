@@ -1,7 +1,7 @@
 {
   "name": "gpa",
   "version": "0.0.1",
-  "description": "Greek Life GPA check system for pledges.",
+  "description": "Greek Life GPA check system for new members.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AppStateESS/gpa.git"

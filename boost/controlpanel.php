@@ -9,7 +9,7 @@
     'label' => 'Greek Life GPA',
     'restricted' => TRUE,
     'url' => '/gpa',
-    'description' => 'Greek Life GPA check system for pledges.',
+    'description' => 'Greek Life GPA check system for new members.',
     'image' => 'gpa.png',
     'tab' => 'content'
  );
