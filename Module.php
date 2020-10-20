@@ -14,16 +14,17 @@ namespace gpa;
  {
      public function __construct()
      {
-         $autoload = PHPWS_SOURCE_DIR . 'mod/gpa/vendor/autoload.php';
-         if (!is_file($autoload))
-         {
-             exit('Greek Life GPA requires "composer install" to be run in module directory.');
-         }
-         require_once $autoload;
          parent::__construct();
+         $this->loadDefines();
          $this->setTitle('gpa');
          $this->setProperName('Greek Life GPA');
          spl_autoload_register('\gpa\Module::autoloader', true, true);
+     }
+
+     public function getSettingDefaults()
+     {
+         $settings = array();
+         return $settings;
      }
 
      public function beforeRun(Request $request, Controller $controller)
@@ -49,16 +50,14 @@ namespace gpa;
 
      public function getController(Request $request)
      {
-         $cmd = $request->shiftCommand();
-         if ($cmd == 'Admin')
-         {
-             if (\Current_user::allow('gpa'))
-             {
-                 $admin = new \gpa\Controller\Admin($this);
-                 return $admin;
+         try {
+             if (!\Current_User::isLogged()) {
+                 \Current_User::requireLogin();
              }
-         } else {
-             \Current_User::requireLogin();
+             $controller = new Controller\BaseController($this, $request);
+             return $controller;
+         } catch (\Exception $e) {
+                 throw $e;
          }
      }
 
@@ -109,6 +108,14 @@ namespace gpa;
          $settings = new \phpws2\Settings;
          \Layout::add($view->show($request), 'gpa', 'gpa', true);
      }
+
+     private function loadDefines()
+     {
+         $custom = PHPWS_SOURCE_DIR . 'mod/gpa/config/defines.php';
+         if (is_file($custom)) {
+             require_once $custom;
+         }
+    }
  }
 
 ?>

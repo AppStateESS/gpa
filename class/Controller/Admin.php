@@ -5,7 +5,7 @@
  * @author Justyn Crook <hannajg at appstate dot edu>
  */
 
- namespace gpa\Controller;
+ namespace gpa\Controller\Role;
 
  use Canopy\Request;
  use gpa\Factory\HostFactory;
@@ -14,7 +14,9 @@
 
  class Admin extends User
  {
-     protected $factory;
+     public function isAdmin() {
+         return true;
+     }
  }
 
  ?>

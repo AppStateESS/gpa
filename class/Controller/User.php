@@ -14,12 +14,16 @@
 
  class User extends RoleController
  {
-     protected $hostFactory;
+     protected $factory;
      protected $view;
+
+     public function isUser() {
+         return true;
+     }
 
      protected function loadFactory()
      {
-         $this->factory = new HostFactory;
+         $this->factory = new Factory;
      }
 
      protected function loadView()
@@ -27,9 +31,19 @@
          $this->view = new View;
      }
 
-     public function shareHtmlCommand(Request $request)
+     protected function editHtmlCommand(Request $request)
      {
-         return $this->factory->shareRequest($request);
+         return $this->view->edit();
+     }
+
+     protected function presentHtmlCommand(Request $request)
+     {
+         return $this->view->present();
+     }
+
+     protected function presentJsonCommand(Request $request)
+     {
+         return $this->factory->get($request);
      }
  }
 
