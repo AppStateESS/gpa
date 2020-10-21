@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @license http://opensource.org/licenses/lgpl-3.0.html
- * @author Justyn Crook <hannajg at appstate dot edu>
+ * @license https://opensource.org/licenses/MIT
+ * @author Justyn Crook <hannajg@appstate.edu>
  */
 
  $use_permissions = TRUE;

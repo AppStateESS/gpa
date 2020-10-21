@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @license http://opensource.org/licenses/lgpl-3.0.html
- * @author Justyn Crook <hannajg at appstate dot edu>
+ * @license https://opensource.org/licenses/MIT
+ * @author Justyn Crook <hannajg@appstate.edu>
  */
 
  namespace gpa\Resource;
@@ -10,7 +10,7 @@
 use \phpws2\Database;
 use gpa\Exception\MissingInput;
 
-class BaseResource extends \phpws2\Resource
+abstract class BaseResource extends \phpws2\Resource
 {
     public function __set($name, $value)
     {
@@ -46,6 +46,12 @@ class BaseResource extends \phpws2\Resource
     public function isEmpty($name)
     {
         return $this->$name->isEmpty();
+    }
+
+    protected function strip($text)
+    {
+        $allowed = implode('', TRIPTRACK_ALLOWED_TAGS);
+        return strip_tags($text, $allowed);
     }
 }
 

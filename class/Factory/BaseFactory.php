@@ -1,12 +1,14 @@
 <?php
 
 /**
- * @license http://opensource.org/licenses/lgpl-3.0.html
- * @author Justyn Crook <hannajg at appstate dot edu>
+ * @license https://opensource.org/licenses/MIT
+ * @author Justyn Crook <hannajg@appstate.edu>
  */
 
 namespace gpa\Factory;
+
 use gpa\Exception\ResourceNotFound;
+use Canopy\Request;
 
 abstract class BaseFactory extends \phpws2\ResourceFactory
 {
@@ -16,28 +18,20 @@ abstract class BaseFactory extends \phpws2\ResourceFactory
 
     public function load(int $id)
     {
-        if (empty($id)) {
-            throw new ResourceNotFound;
-        }
-        $resource = $this->build();
         $resource->setId($id);
         if (!parent::loadByID($resource)) {
-            throw new ResourceNotFound($id);
+            if ($throwException) {
+                throw new ResourceNotFound($id);
+            } else {
+                return null;
+            }
         }
         return $resource;
     }
 
-    protected function walkingCase($name)
+    public static function save(\phpws2\Resource $resource)
     {
-        if (stripos($name, '_')) {
-            return preg_replace_callback('/^(\w)(\w*)_(\w)(\w*)/',
-                    function($letter) {
-                $str = strtoupper($letter[1]) . $letter[2] . strtoupper($letter[3]) . $letter[4];
-                return $str;
-            }, $name);
-        } else {
-            return ucfirst($name);
-        }
+        return self::saveResource($resource);
     }
 }
 

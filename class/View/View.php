@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @license http://opensource.org/licenses/lgpl-3.0.html
- * @author Justyn Crook <hannajg at appstate dot edu>
+ * @license https://opensource.org/licenses/MIT
+ * @author Justyn Crook <hannajg@appstate.edu>
  */
 
  namespace gpa\View;
@@ -10,20 +10,44 @@
  use Canopy\Request;
  use phpws2\Template;
 
- abstract class View
+class View
  {
-     protected $factory;
+     const directory = PHPWS_SOURCE_DIR . 'mod/gpa/';
+     const http = PHPWS_SOURCE_HTTP . '/mod/gpa/';
+
+     private function getDirectory()
+     {
+         return self::directory;
+     }
+
+     private function getHttp()
+     {
+         return self::http;
+     }
 
      private function getScript($filename)
      {
-         $root_directory = PHPWS_SOURCE_HTTP . 'mod/slideshow/javascript/';
-         if (SLIDESHOW_REACT_DEV) {
-             $path = "dev/$filename.js";
+         $jsDirectory = $this->getHttp() . 'javascript/';
+         if (GPA_REACT_DEV) {
+             $path = $jsDirectory . "dev/" . $this->getAssetPath($filename);
          } else {
-             $path = "build/$filename.js";
+             $path = "{$jsDirectory}build/$filename.js";
          }
-         $script = "<script type='text/javascript' src='{$root_directory}$path'></script>";
+         $script = "<script type='text/javascript' src='$path'></script>";
          return $script;
+     }
+
+     private function getAssetPath($filename)
+     {
+         if (!is_file($this->getDirectory() . 'assets.json')) {
+             exit('Missing assets.json file. Run "npm run build" in the gpa directory.');
+         }
+         $jsonRaw = file_get_contents($this->getDirectory() . 'assets.json');
+         $json = json_decode($jsonRaw, true);
+         if (!isset($json[$scriptName]['js'])) {
+             throw new \Exception('Script file not found among assets.');
+         }
+         return $json[$scriptName]['js'];
      }
 
      public function scriptView($view_name, $add_anchor = true, $vars = null)
@@ -38,15 +62,12 @@
          }
          $script[] = $this->getScript($view_name);
          $react = implode("\n", $script);
-         if ($add_anchor) {
-             $content = <<<EOF
-             <div id="$view_name"></div>
-             $react
-             EOF;
-             return $content;
-         } else {
-             return $react;
-         }
+         \Layout::addJSHeader($react);
+         $content = <<<EOF
+         <div id="$view_name"></div>
+         EOF;
+
+         return $content;
      }
 
      private function addScriptVars($vars)
@@ -55,22 +76,14 @@
              return null;
          }
          foreach ($vars as $key => $value) {
-             if (is_array($value)) {
-                 $varList[] = "const $key = " . json_encode($value) . ';';
-             } else {
-                 $varList[] = "const $key = '$value';";
-             }
+             $varList[] = "const $key = " . json_encode($value,
+                            JSON_NUMERIC_CHECK) . ';';
          }
          return '<script type="text/javascript">' . implode('', $varList) . '</script>';
      }
 
-     protected function getRootDirectory()
+     public function show()
      {
-         return PHPWS_SOURCE_DIR . 'mod/gpa/';
-     }
-
-     protected function getRootUrl()
-     {
-         return PHPWS_SOURCE_HTTP . 'mod/gpa/';
+         return $this->scriptView('view');
      }
  }

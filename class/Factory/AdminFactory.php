@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @license http://opensource.org/licenses/lgpl-3.0.html
- * @author Justyn Crook <hannajg at appstate dot edu>
+ * @license https://opensource.org/licenses/MIT
+ * @author Justyn Crook <hannajg@appstate.edu>
  */
 
 namespace gpa\Factory;
@@ -17,7 +17,7 @@ class Home
         $vars['home_img'] = 'mod/gpa/img/gpa.png';
 
         $template = new \phpws2\Template($vars);
-        $template->setModuleTemplate('slideshow', 'index.html');
+        $template->setModuleTemplate('gpa', 'index.html');
         $content = $template->get();
         return $content;
     }
