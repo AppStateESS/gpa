@@ -1,0 +1,6 @@
+*~
+/config/defines.php
+/vendor/*
+**/javascript/dev/
+**/javascript/build/
+**/assets.json
