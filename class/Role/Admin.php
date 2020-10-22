@@ -5,7 +5,7 @@
  * @author Justyn Crook <hannajg@appstate.edu>
  */
 
- namespace gpa\Controller;
+ namespace gpa\Role;
 
  class Admin extends Base
  {

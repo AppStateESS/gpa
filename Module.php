@@ -62,29 +62,14 @@ namespace gpa;
          $settings = array();
          return $settings;
      }
-/*
-     public function getController(Request $request)
-     {
-         try {
-             if (!\Current_User::isLogged()) {
-                 \Current_User::requireLogin();
-             }
-             $controller = new Controller($this, $request);
-             return $controller;
-         } catch (\Exception $e) {
-                 throw $e;
-         }
-     }
-*/
+
      public function runTime(Request $request)
-     {/*
-         //$this->checkDefine();
+     {
          if (\PHPWS_Core::atHome())
          {
-             $content = Home::view();
+             $content = Admin::view();
              \Layout::add($content);
          }
-         */
      }
 
      public function getController(Request $request)

@@ -7,8 +7,8 @@
 
 namespace gpa\Controller;
 
-use triptrack\Exception\BadCommand;
-use triptrack\Exception\PrivilegeMissing;
+use gpa\Exception\BadCommand;
+use gpa\Exception\PrivilegeMissing;
 use phpws2\Database;
 use Canopy\Request;
 
@@ -64,6 +64,7 @@ abstract class SubController
     public function getHtml(Request $request)
     {
         $command = $this->pullGetCommand($request);
+        var_dump($command);
 
         $method_name = $command . 'Html';
         if (!method_exists($this, $method_name)) {

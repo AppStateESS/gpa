@@ -18,7 +18,7 @@ class Controller extends \phpws2\Http\Controller
     {
         parent::__construct($module);
         $this->loadRole();
-        $this->loadController($request);
+        $this->loadSubController($request);
     }
 
     protected function loadRole()
@@ -39,21 +39,15 @@ class Controller extends \phpws2\Http\Controller
             throw new \gpa\Exception\BadCommand('Missing role controller');
         }
 
-        $subController = filter_var($request->shiftCommand(), FILTER_SANITIZE_STRING);
-
         if ($roleController === 'Admin' && !$this->role->isAdmin()) {
             throw new \gpa\Exception\PrivilegeMissing;
         }
 
-        if (empty($subController)) {
-            throw new \gpa\Exception\BadCommand('Missing subcontroller');
+        $controlName = '\\gpa\\Controller\\' . $roleController . '\\';
+        if (!class_exists($controlName)) {
+            throw new \gpa\Exception\BadCommand($controlName);
         }
-
-        $subControlName = '\\gpa\\Controller\\' . $roleController . '\\' . $subController;
-        if (!class_exists($subControlName)) {
-            throw new \gpa\Exception\BadCommand($subControlName);
-        }
-        $this->controller = new $subControlName($this->role);
+        $this->controller = new $controlName($this->role);
     }
 
     public function execute(Request $request)
@@ -62,7 +56,6 @@ class Controller extends \phpws2\Http\Controller
             return parent::execute($request);
         } catch (\gpa\Exception\PrivilegeMissing $e) {
             \Current_User::require_login();
-        }
         } catch (\Exception $e) {
             // Friendly error catch here if needed.
             throw $e;

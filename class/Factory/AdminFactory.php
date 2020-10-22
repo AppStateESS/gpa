@@ -19,7 +19,7 @@ class Home
         $template = new \phpws2\Template($vars);
         $template->setModuleTemplate('gpa', 'index.html');
         $content = $template->get();
-        return $content;
+        \Layout::plug($content);
     }
 }
 

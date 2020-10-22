@@ -22,7 +22,7 @@ class ReportResults extends \phpws2\Resource
     protected $term;
     protected $term_gpa;
     protected $report_id;
-    protected $table = 'report_results';
+    protected $table = 'gpa_results';
 
     public function __construct()
     {
@@ -32,11 +32,11 @@ class ReportResults extends \phpws2\Resource
         $this->banner = new \phpws2\Variable\IntegerVar(0, 'banner');
         $this->transfer = new \phpws2\Variable\BooleanVar(false, 'transfer');
         $this->credits = new \phpws2\Variable\IntegerVar(0, 'credits');
-        $this->year = new \phpws2\Variable\StringVar(0, 'year', 50);
-        $this->gpa = new \phpws2\Variable\DoubleVar(0, 'gpa');
-        $this->hs_gpa = new \phpws2\Variable\DoubleVar(0, 'hs_gpa');
+        $this->year = new \phpws2\Variable\StringVar(null, 'year', 50);
+        $this->gpa = new \phpws2\Variable\DoubleVar(0.0, 'gpa');
+        $this->hs_gpa = new \phpws2\Variable\DoubleVar(0.0, 'hs_gpa');
         $this->term = new \phpws2\Variable\StringVar(null, 'term', 50);
-        $this->term_gpa = new \phpws2\Variable\DoubleVar(0, 'term_gpa');
+        $this->term_gpa = new \phpws2\Variable\DoubleVar(0.0, 'term_gpa');
         $this->term_gpa = new \phpws2\Variable\IntegerVar(0, 'report_id');
         parent::__construct();
     }

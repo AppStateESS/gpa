@@ -7,18 +7,19 @@
 
  namespace gpa\Controller\Admin;
 
- use triptrack\Controller\SubController;
- use triptrack\Factory\AdminFactory;
+ use gpa\Controller\SubController;
+ use gpa\Factory\AdminFactory;
  use Canopy\Request;
 
- class Home extends SubController
+ class Admin extends SubController
  {
      protected $view;
 
-     public function __construct(\triptrack\Role\Base $role)
+     public function __construct(\gpa\Role\Base $role)
      {
          parent::__construct($role);
-         $this->view = new \triptrack\View\TripView();
+         var_dump($role);
+         $this->view = new \gpa\View\View();
      }
 
      protected function show()

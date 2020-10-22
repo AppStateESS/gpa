@@ -6,7 +6,9 @@
  */
 
  use phpws2\Database;
- use phpws2\ForeignKey;
+ use phpws2\Database\ForeignKey;
+
+ require_once PHPWS_SOURCE_DIR . 'mod/stories/boost/StoriesTables.php';
 
  function gpa_install(&$content)
  {
@@ -46,11 +48,11 @@
  function createReportResultsTable()
  {
      $db = Database::getDB();
-     $reportDataTable = $db->addTable('report_data');
+     $reportDataTable = $db->addTable('gpa_data');
      $reportResults = new \gpa\Resource\ReportResults;
      $reportResultsTable = $reportResults->createTable($db);
 
-     $foreign = new ForeignKey($reportResultsTable->getData('report_id'),
+     $foreign = new ForeignKey($reportResultsTable->getDataType('report_id'),
             $reportDataTable->getDataType('id'), ForeignKey::CASCADE);
     $foreign->add();
 
