@@ -5,7 +5,7 @@
  * @author Justyn Crook <hannajg@appstate.edu>
  */
 
- namespace gpa\Controller\Admin;
+ namespace gpa\Controller\;
 
  use gpa\Controller\SubController;
  use gpa\Factory\AdminFactory;
