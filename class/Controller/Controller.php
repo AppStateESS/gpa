@@ -11,6 +11,7 @@ use Canopy\Request;
 
 class Controller extends \phpws2\Http\Controller
 {
+
     protected $role;
     protected $controller;
 
@@ -27,13 +28,14 @@ class Controller extends \phpws2\Http\Controller
         if (\Current_User::allow('gpa')) {
             $this->role = new \gpa\Role\Admin($user_id);
         } else {
-            \Current_User::require_login();
+            \Current_User::requireLogin();
         }
     }
 
     private function loadSubController(Request $request)
     {
-        $roleController = filter_var($request->shiftCommand(), FILTER_SANITIZE_STRING);
+        $roleController = filter_var($request->shiftCommand(),
+                FILTER_SANITIZE_STRING);
 
         if (empty($roleController) || preg_match('/\W/', $roleController)) {
             throw new \gpa\Exception\BadCommand('Missing role controller');
@@ -86,13 +88,13 @@ class Controller extends \phpws2\Http\Controller
     {
         if ($request->isAjax()) {
             $result = $this->controller->getJson($request);
-
         } else {
             $result = $this->controller->getHtml($request);
         }
 
         return $result;
     }
+
 }
 
 ?>

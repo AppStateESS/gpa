@@ -5,25 +5,27 @@
  * @author Justyn Crook <hannajg@appstate.edu>
  */
 
- namespace gpa\Controller\;
+namespace gpa\Controller\Admin;
 
- use gpa\Controller\SubController;
- use gpa\Factory\AdminFactory;
- use Canopy\Request;
+use gpa\Controller\SubController;
+use gpa\Factory\AdminFactory;
+use Canopy\Request;
 
- class Admin extends SubController
- {
-     protected $view;
+class Admin extends SubController
+{
 
-     public function __construct(\gpa\Role\Base $role)
-     {
-         parent::__construct($role);
-         var_dump($role);
-         $this->view = new \gpa\View\View();
-     }
+    protected $view;
 
-     protected function show()
-     {
-         return $this->view->show();
-     }
- }
+    public function __construct()
+    {
+        parent::__construct();
+        var_dump($role);
+        $this->view = new \gpa\View\View();
+    }
+
+    public function show()
+    {
+        return $this->view->show();
+    }
+
+}
