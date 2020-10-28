@@ -19,7 +19,6 @@ class Admin extends SubController
     public function __construct()
     {
         parent::__construct();
-        var_dump($role);
         $this->view = new \gpa\View\View();
     }
 

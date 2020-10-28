@@ -62,16 +62,6 @@ class Module extends \Canopy\Module
         return $settings;
     }
 
-    public function runTime(Request $request)
-    {
-        if (\PHPWS_Core::atHome()) {
-            $controller = $this->getController($request);
-            $adminController = new Admin($controller->role);
-            $content = $adminController->show();
-            \Layout::add($content);
-        }
-    }
-
     public function getController(Request $request)
     {
         try {

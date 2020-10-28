@@ -18,23 +18,15 @@ class Controller extends \phpws2\Http\Controller
     public function __construct(\Canopy\Module $module, Request $request)
     {
         parent::__construct($module);
-        $this->loadRole();
-        $this->loadSubController($request);
-    }
-
-    protected function loadRole()
-    {
-        $user_id = \Current_User::getId();
-        if (\Current_User::allow('gpa')) {
-            $this->role = new \gpa\Role\Admin($user_id);
-        } else {
+        if (!\Current_User::allow('gpa')) {
             \Current_User::requireLogin();
         }
+        $this->loadSubController($request);
     }
 
     private function loadSubController(Request $request)
     {
-        $roleController = filter_var($request->shiftCommand(),
+        /*$roleController = filter_var($request->shiftCommand(),
                 FILTER_SANITIZE_STRING);
 
         if (empty($roleController) || preg_match('/\W/', $roleController)) {
@@ -43,13 +35,14 @@ class Controller extends \phpws2\Http\Controller
 
         if ($roleController === 'Admin' && !$this->role->isAdmin()) {
             throw new \gpa\Exception\PrivilegeMissing;
-        }
+        }*/
 
-        $controlName = '\\gpa\\Controller\\' . $roleController . '\\';
+        //$controlName = '\\gpa\\Controller\\Admin\\' . $roleController . '\\';
+        $controlName = '\\gpa\\Controller\\Admin\\Admin\\';
         if (!class_exists($controlName)) {
             throw new \gpa\Exception\BadCommand($controlName);
         }
-        $this->controller = new $controlName($this->role);
+        $this->controller = new $controlName();
     }
 
     public function execute(Request $request)
