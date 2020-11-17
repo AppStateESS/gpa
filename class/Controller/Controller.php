@@ -8,6 +8,7 @@
 namespace gpa\Controller;
 
 use Canopy\Request;
+use gpa\Factory\RetrieveGPA;
 
 class Controller extends \phpws2\Http\Controller
 {
@@ -59,7 +60,8 @@ class Controller extends \phpws2\Http\Controller
 
     public function post(Request $request)
     {
-        return $this->controller->changeResponse($request);
+        $report = RetrieveGPA::createReport();
+        return $request;
     }
 
     public function patch(Request $request)
