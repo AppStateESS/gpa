@@ -1,23 +1,21 @@
 <?php
 
 namespace gpa\Factory;
+use Canopy\Request;
 use phpws2\Database;
+use gpa\View;
 
 class RetrieveGPA {
 
-    const $db = Database::getDB();
+    function createReport(Request $request) {
 
-    $errors = array();
-    $user = \Current_User::getUsername();
+        $db = Database::getDB();
 
-    if (isset($_POST['retrieve-report'])) {
-        createReport();
-    }
+        $errors = array();
+        $user = \Current_User::getUsername();
 
-    function createReport() {
         if (!empty($_POST['report-name'])) {
             $reportName = $_POST['report-name'];
-            }
         } else {
             array_push($errors, "Missing report name.");
         }
@@ -28,44 +26,43 @@ class RetrieveGPA {
             $term = "Fall 2020";
         }
 
-        if (!empty($_POST['gpa-report'])) {
-            $upload_file = basename($FILES_["gpa-report"]["name"]);
+        if (isset($_FILES['gpa-report'])) {
+            $upload_file = $_FILES["gpa-report"]["tmp_name"];
         } else {
             array_push($errors, "File upload failed.");
+            $upload_file = "";
         }
 
         $addReport = "INSERT INTO gpa_data (name, username, term)
                         VALUES ($reportName, $user, $term);";
 
         $reportID = "SELECT id FROM gpa_data WHERE name=$reportName";
-        $filecontents = file($inputFile);
-        $import_url = "https://node-prd-orgsync.appstate.edu/student";
+        $filecontents = fopen($upload_file, 'r');
+
+        if ($filecontents == FALSE) {
+            die("Could not open file.\n");
+            exit;
+        }
+
+        $import_url = "https://node-prd-orgsync.appstate.edu/student/";
         $curl = curl_init();
 
-        foreach ($filecontents as $value) {
-            $values = explode(",", $value);
-            $banner_id = trim($values[2]);
+        while (($line = fgetcsv($filecontents, 0, ',')) !== FALSE) {
+            foreach ($line as $key=>$element) {
+                $line[$key] = pg_escape_string($element);
+            }
+
+            $banner_id = trim($line[2]);
 
             if (substr($banner_id, 0, 3) != "900") {
                 $email_parts = explode("@",$banner_id);
                 $banner_id = $email_parts[0];
             }
 
-            curl_setopt_array($curl, array(CURLOPT_RETURNTRANSFER => 1, CURLOPT_URL => $import_url.$banner_id));
+            /*curl_setopt_array($curl, array(CURLOPT_RETURNTRANSFER => 1, CURLOPT_URL => $import_url.$banner_id));
             $result = json_decode(curl_exec($curl));
-            $student = $result->response;
-    /*
-            if($term) {
-                curl_reset($curl);
-                $url = $import_url.$banner_id."/$term/GPA";
-                curl_setopt_array($curl, array(CURLOPT_RETURNTRANSFER => 1, CURLOPT_URL => $url));
-                $term_result = json_decode(curl_exec($curl));
-                $term_student = $term_result->response;
-                $term_gpa = $term_student->termGPA;
-            } else {
-                $term_gpa = 0.0;
-            }
-    */
+            $student = $result->response ?? exit;
+
             if(!empty($student->lastName)) {
                 $year = "Freshmen";
                 $transfer = "No";
@@ -85,8 +82,8 @@ class RetrieveGPA {
                 elseif ($hrs >= 90)
                     $year = "Senior";
             } else {
-                $firstName = $values[0];
-                $lastName = $values[1];
+                $firstName = $line[0];
+                $lastName = $line[1];
                 $transfer = 0;
                 $hrs = 0;
                 $year = "NOT FOUND";
@@ -100,70 +97,10 @@ class RetrieveGPA {
                 $GPA, $H_GPA, $term, $reportID);";
         }
         curl_close($curl);
+        */
+            $lastName = $line[1];
+            $firstName = $line[0];
+        }
+
     }
 }
-/*
-$filecontents = file($input_filename);
-$fhandle = fopen($output_filename, "w+");
-$import_url = "https://node-prd-orgsync.appstate.edu/student/";
-$curl = curl_init();
-if($term){
-    $term_header = "$term GPA";
-} else {
-    $term_header = "";
-}
-
-$data = "'First Name','Last Name','Banner ID','Transfer','Credits','Year','GPA','High School GPA','$term_header'"."\n";
-
-
-    curl_setopt_array($curl, array(CURLOPT_RETURNTRANSFER => 1, CURLOPT_URL => $import_url.$banner_id));
-    $result = json_decode(curl_exec($curl));
-    $student = $result->response;
-
-    if($term) {
-        curl_reset($curl);
-        $url = $import_url.$banner_id."/$term/GPA";
-        curl_setopt_array($curl, array(CURLOPT_RETURNTRANSFER => 1, CURLOPT_URL => $url));
-        $term_result = json_decode(curl_exec($curl));
-        $term_student = $term_result->response;
-        $term_gpa = $term_student->termGPA;
-    } else {
-        $term_gpa = '';
-    }
-
-    if(!empty($student->lastName)){
-        $year = "Freshmen";
-        $transfer = "No";
-        $hrs = $student->totalHoursEarned;
-        $firstName = $student->firstName;
-        $lastName = $student->lastName;
-        $GPA = $student->overallGPA;
-        $H_GPA = $student->highSchoolGPA;
-
-        if($student->studentType === "T")
-            $transfer = "Yes";
-
-        if($hrs >= 30 && $hrs < 60)
-            $year = "Sophomore";
-        elseif($hrs >= 60 && $hrs < 90)
-            $year = "Junior";
-        elseif($hrs >= 90)
-            $year = "Senior";
-    }else{
-        $firstName = $values[0];
-        $lastName = $values[1];
-        $transfer = "NOT FOUND";
-        $hrs = "NOT FOUND";
-        $year = "NOT FOUND";
-        $GPA = "NOT FOUND";
-        $H_GPA = "NOT FOUND";
-    }
-    $data .= $firstName.','.$lastName.','.$banner_id.','.$transfer.','.$hrs.','.$year.','.$GPA.','.$H_GPA.$term_gpa."\n";
-
-}
-
-fwrite($fhandle, $data);
-fclose($fhandle);
-curl_close($curl);
-exit;
-*/

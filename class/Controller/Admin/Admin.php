@@ -15,16 +15,23 @@ class Admin extends SubController
 {
 
     protected $view;
+    protected $resultsView;
 
     public function __construct()
     {
         parent::__construct();
         $this->view = new \gpa\View\View();
+        $this->resultsView = new \gpa\View\ResultsView();
     }
 
     public function show()
     {
         return $this->view->show();
+    }
+
+    public function showResults()
+    {
+        return $this->resultsView->show();
     }
 
 }

@@ -64,16 +64,7 @@ abstract class SubController
     public function getHtml(Request $request)
     {
         $command = $this->pullGetCommand($request);
-/*
-        $method_name = $command . 'Html';
-        if (!method_exists($this, $method_name)) {
-            if ($this->id && method_exists($this, 'viewHtml')) {
-                $method_name = 'viewHtml';
-            } else {
-                throw new BadCommand($method_name);
-            }
-        }
-*/
+
         $method_name = 'show';
         $content = $this->$method_name($request);
         return $this->htmlResponse($content);

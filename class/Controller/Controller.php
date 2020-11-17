@@ -9,6 +9,7 @@ namespace gpa\Controller;
 
 use Canopy\Request;
 use gpa\Factory\RetrieveGPA;
+use gpa\View\ResultsView;
 
 class Controller extends \phpws2\Http\Controller
 {
@@ -60,8 +61,10 @@ class Controller extends \phpws2\Http\Controller
 
     public function post(Request $request)
     {
-        $report = RetrieveGPA::createReport();
-        return $request;
+        //var_dump($_FILES['gpa-report']);
+        $report = (new RetrieveGPA)->createReport($request);
+        $rv = new ResultsView();
+        return $rv->show();
     }
 
     public function patch(Request $request)
@@ -80,13 +83,7 @@ class Controller extends \phpws2\Http\Controller
     }
 
     public function get(Request $request)
-    {/*
-        if ($request->isAjax()) {
-            $result = $this->controller->getJson($request);
-        } else {
-            $result = $this->controller->getHtml($request);
-        }
-*/
+    {
         $result = $this->controller->getHtml($request);
         return $result;
     }
