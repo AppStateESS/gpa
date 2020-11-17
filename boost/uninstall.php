@@ -5,7 +5,7 @@
  * @author Justyn Crook <hannajg@appstate.edu>
  */
 
- use phpwl2\Database;
+ use phpws2\Database;
 
  function contact_uninstall(&$content)
  {

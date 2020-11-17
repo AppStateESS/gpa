@@ -38,7 +38,7 @@ class Controller extends \phpws2\Http\Controller
         }*/
 
         //$controlName = '\\gpa\\Controller\\Admin\\' . $roleController . '\\';
-        $controlName = '\\gpa\\Controller\\Admin\\Admin\\';
+        $controlName = '\\gpa\\Controller\\Admin\\Admin';
         if (!class_exists($controlName)) {
             throw new \gpa\Exception\BadCommand($controlName);
         }
@@ -78,13 +78,14 @@ class Controller extends \phpws2\Http\Controller
     }
 
     public function get(Request $request)
-    {
+    {/*
         if ($request->isAjax()) {
             $result = $this->controller->getJson($request);
         } else {
             $result = $this->controller->getHtml($request);
         }
-
+*/
+        $result = $this->controller->getHtml($request);
         return $result;
     }
 

@@ -36,7 +36,7 @@ class ReportResults extends \phpws2\Resource
         $this->gpa = new \phpws2\Variable\DoubleVar(0.0, 'gpa');
         $this->hs_gpa = new \phpws2\Variable\DoubleVar(0.0, 'hs_gpa');
         $this->term = new \phpws2\Variable\StringVar(null, 'term', 50);
-        $this->term_gpa = new \phpws2\Variable\DoubleVar(0.0, 'term_gpa');
+        $this->term_gpa = new \phpws2\Variable\DoubleVar(null, 'term_gpa');
         $this->term_gpa = new \phpws2\Variable\IntegerVar(0, 'report_id');
         parent::__construct();
     }

@@ -18,9 +18,9 @@ abstract class SubController
     protected $role;
     protected $id;
 
-    public function __construct(\gpa\Role\Base $role)
+    public function __construct()
     {
-        $this->role = $role;
+        $role = 'Admin';
     }
 
     /**
@@ -64,8 +64,7 @@ abstract class SubController
     public function getHtml(Request $request)
     {
         $command = $this->pullGetCommand($request);
-        var_dump($command);
-
+/*
         $method_name = $command . 'Html';
         if (!method_exists($this, $method_name)) {
             if ($this->id && method_exists($this, 'viewHtml')) {
@@ -74,11 +73,12 @@ abstract class SubController
                 throw new BadCommand($method_name);
             }
         }
-
+*/
+        $method_name = 'show';
         $content = $this->$method_name($request);
         return $this->htmlResponse($content);
     }
-
+/*
     public function getJson(Request $request)
     {
         $command = $this->pullGetCommand($request);
@@ -91,7 +91,7 @@ abstract class SubController
 
         /**
          * Unlike getHtml, a bad command is not excused
-         */
+         *//*
         if (!method_exists($this, $method_name)) {
             throw new BadCommand($method_name);
         }
@@ -99,7 +99,7 @@ abstract class SubController
         $json = $this->$method_name($request);
         return $this->jsonResponse($json);
     }
-
+*/
     public function htmlResponse($content)
     {
         $view = new \phpws2\View\HtmlView($content);
