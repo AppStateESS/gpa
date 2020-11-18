@@ -59,6 +59,7 @@ class Controller extends \phpws2\Http\Controller
         }
     }
 
+/*
     public function post(Request $request)
     {
         //var_dump($_FILES['gpa-report']);
@@ -66,6 +67,7 @@ class Controller extends \phpws2\Http\Controller
         $rv = new ResultsView();
         return $rv->show();
     }
+    */
 
     public function patch(Request $request)
     {

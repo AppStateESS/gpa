@@ -7,6 +7,8 @@ use gpa\View;
 
 class RetrieveGPA {
 
+    private $report;
+
     function createReport(Request $request) {
 
         $db = Database::getDB();
@@ -16,6 +18,7 @@ class RetrieveGPA {
 
         if (!empty($_POST['report-name'])) {
             $reportName = $_POST['report-name'];
+            $report = $reportName;
         } else {
             array_push($errors, "Missing report name.");
         }
@@ -59,9 +62,10 @@ class RetrieveGPA {
                 $banner_id = $email_parts[0];
             }
 
-            /*curl_setopt_array($curl, array(CURLOPT_RETURNTRANSFER => 1, CURLOPT_URL => $import_url.$banner_id));
+            curl_setopt_array($curl, array(CURLOPT_RETURNTRANSFER => 1, CURLOPT_URL => $import_url.$banner_id));
             $result = json_decode(curl_exec($curl));
-            $student = $result->response ?? exit;
+            //$student = $result->response ?? exit;
+            $student = json_decode(file_get_contents("stu.json", true));
 
             if(!empty($student->lastName)) {
                 $year = "Freshmen";
@@ -97,10 +101,11 @@ class RetrieveGPA {
                 $GPA, $H_GPA, $term, $reportID);";
         }
         curl_close($curl);
-        */
-            $lastName = $line[1];
-            $firstName = $line[0];
-        }
 
+        showResults();
+    }
+
+    function showResults() {
+        print("<h2>Results</h2>");
     }
 }

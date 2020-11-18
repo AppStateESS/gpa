@@ -1,0 +1,7 @@
+{
+    "response":{"ID":"900528386","additionalRaces":"White","admitStuType":"Z","admitTerm":"202110","birthDate":"19930319","campusDescription":null,"citizenshipCode":"Y","classCode":null,"classDescription":"Senior","classification":null,"collegeCode":"ED","collegeDesc":"College of Education",
+        "confidential":"N","creditHoursEnrolled":null,"effectiveTerm":null,"emailAddress":"gibsona@appstate.edu","enrollmentDate":"2021-01-19T05:00:00.000Z","ethnicity":null,"feePaid":"N","firstGen":0,"firstName":"Annamaria","gender":"F","gradDate":null,"gradYear":"25",
+        "highSchoolGPA":"3.93","holds":[],"international":false,"isHispanic":"Non-Hispanic","isStudent":false,"lastName":"Gibson","mainCampus":0,"major":"510*","majors":[{"majorCode":"510*","majorDesc":"Child Development","programCode":"BS_510H","programAdmit":false}],"maritalStatus":"S",
+        "middleName":null,"minor":null,"namePrefix":"Ms.","nameSuffix":null,"onCampus":null,"overallGPA":"2.79","phoneNumber":"7043402906","preferredName":null,"races":"500","studentLevel":"U","studentType":null,"totalHoursEarned":125,"transfer":null,"userName":"gibsona","veteran":0},
+    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI6OmZmZmY6MTUyLjEwLjEzNC41NiIsImlhdCI6MTYwNTcxMjA5NiwiZXhwIjoxNjA1NzE1Njk2fQ.gQMK0S-4qVlrm5wehjXoWYh5i6VlnB7vTl-dDDvzvsA"
+}
