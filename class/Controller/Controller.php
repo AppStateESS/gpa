@@ -59,15 +59,13 @@ class Controller extends \phpws2\Http\Controller
         }
     }
 
-/*
+
     public function post(Request $request)
     {
-        //var_dump($_FILES['gpa-report']);
-        $report = (new RetrieveGPA)->createReport($request);
+        $reportID = (new RetrieveGPA)->createReport($request);
         $rv = new ResultsView();
-        return $rv->show();
+        return $rv->show($reportID);
     }
-    */
 
     public function patch(Request $request)
     {

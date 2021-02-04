@@ -27,8 +27,8 @@ class ResultsView
 
      public function show()
      {
-         return (
-            "<h2>Results</h2>"
-         );
+        $template = new Template();
+        $template->setModuleTemplate('gpa', 'gpa-results.html');
+        return $template->get();
      }
  }

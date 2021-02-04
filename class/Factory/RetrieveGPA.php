@@ -102,10 +102,6 @@ class RetrieveGPA {
         }
         curl_close($curl);
 
-        showResults();
-    }
-
-    function showResults() {
-        print("<h2>Results</h2>");
+        return $reportID;
     }
 }
