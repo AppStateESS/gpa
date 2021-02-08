@@ -64,7 +64,9 @@ class Controller extends \phpws2\Http\Controller
     {
         $reportID = (new RetrieveGPA)->createReport($request);
         $rv = new ResultsView();
-        return $rv->show($reportID);
+        $view = $rv->show($reportID);
+        $response = new \Canopy\Response($view);
+        return $response;
     }
 
     public function patch(Request $request)
