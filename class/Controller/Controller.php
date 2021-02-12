@@ -62,9 +62,9 @@ class Controller extends \phpws2\Http\Controller
 
     public function post(Request $request)
     {
-        $reportID = (new RetrieveGPA)->createReport($request);
+        $reportData = (new RetrieveGPA)->createReport($request);
         $rv = new ResultsView();
-        $view = $rv->show($reportID);
+        $view = new \phpws2\View\HtmlView($rv->show($reportData));
         $response = new \Canopy\Response($view);
         return $response;
     }

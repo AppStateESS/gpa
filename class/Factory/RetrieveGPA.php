@@ -6,9 +6,7 @@ use phpws2\Database;
 use gpa\View;
 
 class RetrieveGPA {
-
-    private $report;
-
+    
     function createReport(Request $request) {
 
         $db = Database::getDB();
@@ -102,6 +100,8 @@ class RetrieveGPA {
         }
         curl_close($curl);
 
-        return $reportID;
+        $report_data = "SELECT * FROM gpa_results WHERE report_id=$reportID;";
+
+        return $report_data;
     }
 }
