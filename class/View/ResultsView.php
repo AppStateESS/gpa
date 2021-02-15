@@ -25,26 +25,12 @@ class ResultsView
         return self::http;
     }
 
-    public function getScript($scriptName, $data)
-    {
-        $path = $this->getHttp() . "javascript/" . $scriptName;
-        $script = "<script type='text\javascript' src='$path'></script>";
-        return $script;
-    }
-
-    public function scriptView($view_name, $vars = null)
-    {
-        $script[] = $this->getScript($view_name, $vars);
-        $react = implode("\n", $script);
-        \Layout::addJSHeader($react);
-        $content = `EOF
-        <div id="$view_name"></div>
-        EOF`;
-        return $content;
-    }
-
     public function show($data)
     {
-        return $this->scriptView('View', $data);
+        $template = new Template($data);
+        $template->setModuleTemplate('gpa', 'results.tpl');
+        $content = $template->get();
+        
+        \Layout::plug($content, 'RESULTS');
     }
  }

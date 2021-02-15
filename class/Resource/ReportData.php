@@ -24,8 +24,8 @@ class ReportData extends \phpws2\Resource
         $this->username = new \phpws2\Variable\StringVar(null, 'username', 50);
         $this->created_on = new \phpws2\Variable\DateTime(0, 'created_on');
         $this->term = new \phpws2\Variable\StringVar(null, 'term', 50);
-        parent::__construct();
         $this->created_on->stamp();
+        parent::__construct();
     }
 /*
     public function getTimeStamp()

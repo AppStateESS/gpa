@@ -10,6 +10,7 @@ class RetrieveGPA {
     function createReport(Request $request) {
 
         $db = Database::getDB();
+        $tbl1 = $db->addTable('gpa_data');
 
         $errors = array();
         $user = \Current_User::getUsername();
@@ -34,10 +35,24 @@ class RetrieveGPA {
             $upload_file = "";
         }
 
-        $addReport = "INSERT INTO gpa_data (name, username, term)
-                        VALUES ($reportName, $user, $term);";
+        try {
+            $tbl1->addValue('name', $reportName);
+            $tbl1->addValue('username', $user);
+            $tbl1->addValue('term', $term);
+            $db->insert();
+        } catch (Exception $e) {
+            array_push($errors, "Insertion failed on gpa_data.");
+        }
 
-        $reportID = "SELECT id FROM gpa_data WHERE name=$reportName";
+        try {
+            $tbl1->addFieldConditional('name', $reportName);
+            $reportRow = $db->select();
+            $reportID = $reportRow["id"];
+        } catch (Exception $e) {
+            array_push($errors, "Report ID Selection failed.");
+            $reportID = NULL;
+        }
+
         $filecontents = fopen($upload_file, 'r');
 
         if ($filecontents == FALSE) {
@@ -48,7 +63,10 @@ class RetrieveGPA {
         $import_url = "https://node-prd-orgsync.appstate.edu/student/";
         $curl = curl_init();
 
-        while (($line = fgetcsv($filecontents, 0, ',')) !== FALSE) {
+        $db = Database::getDB();
+        $tbl2 = $db->addTable('gpa_results');
+
+        while ((($line = fgetcsv($filecontents, 0, ',')) !== FALSE) && $reportID != NULL) {
             foreach ($line as $key=>$element) {
                 $line[$key] = pg_escape_string($element);
             }
@@ -90,18 +108,26 @@ class RetrieveGPA {
                 $hrs = 0;
                 $year = "NOT FOUND";
                 $GPA = 0.0;
-                $H_GPA = 0.0;
+                $HS_GPA = 0.0;
             }
 
-            $addResult = "INSERT INTO gpa_results (first_name, last_name, banner,
-                transfer, credits, year, gpa, hs_gpa, term, report_id)
-                VALUES ($firstName, $lastName, $banner_id, $transfer, $hrs, $year,
-                $GPA, $H_GPA, $term, $reportID);";
+            $tbl2->addValue('first_name', $firstName);
+            $tbl2->addValue('last_name', $lastName);
+            $tbl2->addValue('banner', $banner_id);
+            $tbl2->addValue('transfer', $transfer);
+            $tbl2->addValue('credits', $hrs);
+            $tbl2->addValue('year', $year);
+            $tbl2->addValue('gpa', $GPA);
+            $tbl2->addValue('hs_gpa', $HS_GPA);
+            $tbl2->addValue('term', $term);
+            $tbl2->addValue('report_id', $reportID);
+            $db->insert();
         }
         curl_close($curl);
 
-        $report_data = "SELECT * FROM gpa_results WHERE report_id=$reportID;";
+        $tbl2->addFieldConditional('report_id', $reportID);
+        $rows = $db->select();
 
-        return $report_data;
+        return $rows;
     }
 }

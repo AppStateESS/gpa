@@ -6,6 +6,8 @@
     </head>
     <body>
         <h2>GPA Report</h2>
-        <div id="Results"></div>
+        <div id="Results">
+            {RESULTS}
+        </div>
     </body>
 </html>
