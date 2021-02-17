@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>GPA</title>
+    </head>
+    <body>
+        <h2>GPA</h2>
+        <form method="post" enctype="multipart/form-data">
+            <label>Report Name:</label>
+            <input type="text" name="report-name" required>
+            <label>Term:</label>
+            <input type="text" name="term" required>
+            <label>CSV File:</label>
+            <input type="file" name="gpa-report" accept=".csv" required>
+            <input type="submit" value="Submit" name="retrieve-report">
+        </form>
+    </body>
+</html>

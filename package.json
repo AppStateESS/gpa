@@ -1,0 +1,16 @@
+{
+  "name": "gpa",
+  "version": "0.0.1",
+  "description": "Greek Life GPA check system for new members.",
+  "main": "index.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AppStateESS/gpa.git"
+  },
+  "homepage": "https://github.com/AppStateESS/gpa#readme",
+  "author": "Justyn Crook <hannajg@appstate.edu>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AppStateESS/gpa/issues"
+  }
+}
