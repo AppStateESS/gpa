@@ -47,7 +47,7 @@ class RetrieveGPA {
         try {
             $tbl1->addFieldConditional('name', $reportName);
             $reportRow = $db->select();
-            $reportID = $reportRow["id"];
+            $reportID = $reportRow[0]['id'];
         } catch (Exception $e) {
             array_push($errors, "Report ID Selection failed.");
             $reportID = NULL;

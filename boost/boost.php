@@ -6,7 +6,7 @@
  */
 
  $proper_name = 'Greek Life GPA';
- $version = '0.0.1';
+ $version = '1.0.0';
  $import_sql = false;
  $image_dir = true;
 

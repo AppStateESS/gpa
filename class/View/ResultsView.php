@@ -27,10 +27,12 @@ class ResultsView
 
     public function show($data)
     {
+        $data = array('results'=>$data);
         $template = new Template($data);
         $template->setModuleTemplate('gpa', 'results.tpl');
         $content = $template->get();
         
-        \Layout::plug($content, 'RESULTS');
+        \Layout::plug($content, 'results');
+        return $content;
     }
  }
