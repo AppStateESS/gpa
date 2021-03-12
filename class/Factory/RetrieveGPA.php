@@ -80,17 +80,17 @@ class RetrieveGPA {
 
             curl_setopt_array($curl, array(CURLOPT_RETURNTRANSFER => 1, CURLOPT_URL => $import_url.$banner_id));
             $result = json_decode(curl_exec($curl));
-            //$student = $result->response ?? exit;
-            $student = json_decode(file_get_contents("stu.json", true));
+            $student = $result->response;
+            //$student = json_decode(file_get_contents("stu.json", true));
 
             if(!empty($student->lastName)) {
                 $year = "Freshmen";
-                $transfer = "No";
+                $transfer = 0;
                 $hrs = $student->totalHoursEarned;
                 $firstName = $student->firstName;
                 $lastName = $student->lastName;
                 $GPA = $student->overallGPA;
-                $H_GPA = $student->highSchoolGPA;
+                $HS_GPA = $student->highSchoolGPA;
 
                 if($student->studentType === "T")
                     $transfer = 1;
