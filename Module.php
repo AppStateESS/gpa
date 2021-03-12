@@ -17,7 +17,7 @@ $defineFile = PHPWS_SOURCE_DIR . 'mod/gpa/config/defines.php';
 if (is_file($defineFile)) {
     require_once $defineFile;
 } else {
-    require_once PHPWS_SOURCE_DIR . 'mod/gpa/config/defines.dist.php';
+    require_once PHPWS_SOURCE_DIR . 'mod/gpa/config/defines-dist.php';
 }
 
 class Module extends \Canopy\Module
