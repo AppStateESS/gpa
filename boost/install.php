@@ -8,8 +8,6 @@
  use phpws2\Database;
  use phpws2\Database\ForeignKey;
 
- require_once PHPWS_SOURCE_DIR . 'mod/stories/boost/StoriesTables.php';
-
  function gpa_install(&$content)
  {
      $db = Database::getDB();
