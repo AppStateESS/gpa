@@ -34,9 +34,12 @@ class ReportResults extends \phpws2\Resource
         $this->credits = new \phpws2\Variable\IntegerVar(0, 'credits');
         $this->year = new \phpws2\Variable\StringVar(null, 'year', 50);
         $this->gpa = new \phpws2\Variable\DoubleVar(0.0, 'gpa');
+        $this->gpa->allowNull(true);
         $this->hs_gpa = new \phpws2\Variable\DoubleVar(0.0, 'hs_gpa');
+        $this->hs_gpa->allowNull(true);
         $this->term = new \phpws2\Variable\StringVar(null, 'term', 50);
         $this->term_gpa = new \phpws2\Variable\DoubleVar(null, 'term_gpa');
+        $this->term_gpa->allowNull(true);
         $this->term_gpa = new \phpws2\Variable\IntegerVar(0, 'report_id');
         parent::__construct();
     }
