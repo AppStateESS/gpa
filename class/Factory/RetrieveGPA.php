@@ -60,7 +60,7 @@ class RetrieveGPA {
             exit;
         }
 
-        $import_url = "https://node-prd-orgsync.appstate.edu/student/";
+        $import_url = STUDENT_GPA_URL;
         $curl = curl_init();
 
         $db = Database::getDB();
