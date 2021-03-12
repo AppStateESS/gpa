@@ -5,8 +5,8 @@
  * @author Justyn Crook <hannajg@appstate.edu>
  */
 
- $proper_name = 'Greek Life GPA';
- $version = '1.0.0';
+ $proper_name = GPA_NAME;
+ $version = GPA_DEFINE_VERSION;
  $import_sql = false;
  $image_dir = true;
 
