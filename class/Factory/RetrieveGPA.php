@@ -76,12 +76,18 @@ class RetrieveGPA {
             if (substr($banner_id, 0, 3) != "900") {
                 $email_parts = explode("@",$banner_id);
                 $banner_id = $email_parts[0];
+            } else {
+                array_push($errors, "Incorrect formatting. The formatting should be: First Name | Last Name | Banner ID.");
             }
 
             curl_setopt_array($curl, array(CURLOPT_RETURNTRANSFER => 1, CURLOPT_URL => $import_url.$banner_id));
             $result = json_decode(curl_exec($curl));
             //$student = $result->response;
             $student = json_decode(file_get_contents("stu.json", true));
+            if ($student === NULL) {
+                array_push($errors, "Data not found. Please make sure data is correct in CSV.");
+                get('gpa');
+            }
 
             if(!empty($student->lastName)) {
                 $year = "Freshmen";
