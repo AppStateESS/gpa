@@ -28,18 +28,6 @@ class Controller extends \phpws2\Http\Controller
 
     private function loadSubController(Request $request)
     {
-        /*$roleController = filter_var($request->shiftCommand(),
-                FILTER_SANITIZE_STRING);
-
-        if (empty($roleController) || preg_match('/\W/', $roleController)) {
-            throw new \gpa\Exception\BadCommand('Missing role controller');
-        }
-
-        if ($roleController === 'Admin' && !$this->role->isAdmin()) {
-            throw new \gpa\Exception\PrivilegeMissing;
-        }*/
-
-        //$controlName = '\\gpa\\Controller\\Admin\\' . $roleController . '\\';
         $controlName = '\\gpa\\Controller\\Admin\\Admin';
         if (!class_exists($controlName)) {
             throw new \gpa\Exception\BadCommand($controlName);
@@ -58,7 +46,6 @@ class Controller extends \phpws2\Http\Controller
             throw $e;
         }
     }
-
 
     public function post(Request $request)
     {
