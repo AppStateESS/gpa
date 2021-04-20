@@ -28,7 +28,12 @@
                 <div class='col border'>" . $row['first_name'] . "</div>
                 <div class='col border'>" . $row['last_name'] . "</div>
                 <div class='col border'>" . $row['banner'] . "</div>
-                <div class='col border'>" . $row['transfer'] . "</div>
+                <div class='col border'>");
+    if($row['transfer'] == 1) 
+        echo('Yes');
+    else 
+        echo('No');
+    echo("</div>
                 <div class='col border'>" . $row['credits'] . "</div>
                 <div class='col border'>" . $row['year'] . "</div>
                 <div class='col border'>" . $row['gpa'] . "</div>

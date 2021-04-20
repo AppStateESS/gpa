@@ -6,7 +6,7 @@
  */
 
  define('GPA_NAME', 'Greek Life GPA');
- define('GPA_DEFINE_VERSION', '1.0.1');
+ define('GPA_DEFINE_VERSION', '1.0.2');
  define('GPA_REACT_DEV', true);
 
 /* Example */
